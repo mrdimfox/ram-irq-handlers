@@ -1,0 +1,77 @@
+---
+
+# https://zed0.co.uk/clang-format-configurator/
+
+BasedOnStyle: Mozilla
+AccessModifierOffset: '-3'
+
+AlignConsecutiveAssignments: 'false'
+AlignConsecutiveDeclarations: 'false'
+AlignOperands: 'true'
+AlignTrailingComments: 'true'
+AllowShortBlocksOnASingleLine: 'true'
+AllowShortCaseLabelsOnASingleLine: 'false'
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: 'false'
+AlwaysBreakTemplateDeclarations: 'true'
+BinPackArguments: 'true'
+BinPackParameters: 'false'
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+AllowShortLoopsOnASingleLine: 'false'
+BreakBeforeInheritanceComma: 'false'
+
+ColumnLimit: '80'
+ConstructorInitializerAllOnOneLineOrOnePerLine: 'false'
+AllowAllParametersOfDeclarationOnNextLine: 'false'
+ExperimentalAutoDetectBinPacking: 'false'
+IndentCaseLabels: 'true'
+BreakBeforeBinaryOperators: None
+
+NamespaceIndentation: None
+
+SpaceAfterCStyleCast: 'false'
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: 'false'
+SpacesBeforeTrailingComments: '2'
+SpacesInAngles: 'false'
+Standard: Auto
+TabWidth: '4'
+UseTab: Never
+BreakConstructorInitializers: AfterColon
+
+Cpp11BracedListStyle: 'true'
+FixNamespaceComments: 'true'
+
+# Align parameters on the open bracket
+AlignAfterOpenBracket: AlwaysBreak
+
+# Configure each individual brace in BraceWrapping
+BreakBeforeBraces: 'Custom'
+
+# Control of individual brace wrapping cases
+BraceWrapping:
+    AfterClass: 'true'
+    AfterControlStatement: 'false'
+    AfterEnum : 'true'
+    AfterFunction : 'true'
+    AfterNamespace : 'false'
+    AfterStruct : 'true'
+    AfterUnion : 'true'
+    BeforeCatch : 'false'
+    BeforeElse : 'true'
+    IndentBraces : 'false'
+
+# The number of columns to use for indentation.
+IndentWidth: '4'
+
+# Targeted language
+Language: Cpp
+
+# Pointer is aligned to right side
+# PointerAlignment: Left
+
+IndentWrappedFunctionNames: 'false'
+
+KeepEmptyLinesAtTheStartOfBlocks: 'true'
+...
