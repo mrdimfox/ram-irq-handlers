@@ -1,3 +1,4 @@
-# Short description
+# RAM IRQ handlers
 
-This brach is used for a testing cmake stuff with cm3cpp library and others.
+Experimental classes for a registering own interrupt handlers
+using modern C++. Supposed that vectors table locates in RAM.
