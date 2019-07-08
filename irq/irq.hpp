@@ -139,7 +139,6 @@ template<class IrqHandlerHolder, Irq IRQ>
 class IrqHandler
 {
     using CallableHandler = void (IrqHandlerHolder::*)(void);
-    using CallableHandlerWithArg = void (IrqHandlerHolder::*)(Irq);
 
  public:
     constexpr IrqHandler(
@@ -209,8 +208,6 @@ typename IrqHandler<IrqHandlerHolder, IRQ>::CallableHandler
 template<class IrqHolder, Irq... IRQS>
 struct MultiIrqHandler : IrqHandler<IrqHolder, IRQS>...
 {
-    using IrqHandler<IrqHolder, IRQS>::IrqHandler...;
-
     template<class Holder, class... Callables>
     MultiIrqHandler(Holder* holder, Callables&&... callables) :
       IrqHandler<IrqHolder, IRQS>(holder, callables)...
