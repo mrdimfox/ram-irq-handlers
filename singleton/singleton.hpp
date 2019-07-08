@@ -32,6 +32,7 @@ namespace patterns {
 template<typename T>
 struct Singleton : NonMovable<Singleton<T>>, NonCopyable<Singleton<T>>
 {
+
     static T& instance()
     {
         static T instance;
@@ -40,12 +41,8 @@ struct Singleton : NonMovable<Singleton<T>>, NonCopyable<Singleton<T>>
         return instance;
     }
 
+ protected:
     Singleton() = default;
-    Singleton(const Singleton&) = delete;
-    Singleton(Singleton&&) = delete;
-    Singleton& operator=(const Singleton&) = delete;
-    Singleton& operator=(Singleton&&) = delete;
-
     static T* instance_ptr;
 };
 
