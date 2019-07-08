@@ -10,7 +10,7 @@
 
 int main()
 {
-    examples::IrqHolder irq_holder;
+    examples::MultiIrqHolder multi_irq_holder;
     examples::IrqHolderFixed irq_holder_fixed;
     examples::IrqHolderFixedWithMultiIrq irq_holder_fixed_with_multi_irq;
     auto& irq_holder_singleton = examples::IrqHolderSingleton::instance();
