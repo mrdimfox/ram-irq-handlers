@@ -8,6 +8,7 @@ struct Vectors
     void (*usb_irq)();
     void (*adc1_irq)();
     void (*adc2_irq)();
+    void (*spi1_irq)();
 };
 
 extern struct Vectors global_irq_vectors;

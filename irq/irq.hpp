@@ -14,7 +14,8 @@ enum class Irq : uint8_t
     USART2,
     USB,
     ADC1,
-    ADC2
+    ADC2,
+    SPI1
     // others
 };
 
