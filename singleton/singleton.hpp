@@ -58,7 +58,8 @@ struct Singleton : NonMovable<Singleton<T>>, NonCopyable<Singleton<T>>
           "Your singleton class must not has any public constructors!");
     }
 
-    static T* instance_ptr;
+    static T* instance_ptr;  //!< For an easy access to the instance ptr from
+                             //!< the child and better compiler optimizations.
 };
 
 template<typename T>
