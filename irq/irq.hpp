@@ -29,7 +29,7 @@ using VectorFreeFunc = void (*)(void);
  *
  * @note Fastest variant of using interrupt handlers
  */
-inline constexpr void register_irq_handler(Irq irq, VectorFreeFunc func)
+inline void register_irq_handler(Irq irq, VectorFreeFunc func)
 {
     auto vectors_table_start =
       reinterpret_cast<VectorFreeFunc*>(&global_irq_vectors);
