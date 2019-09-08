@@ -1,4 +1,4 @@
-#include <irq/vectors.h>
+#include <examples/vectors/vectors.h>
 
 #include <examples/irq_holder.hpp>
 #include <examples/multi_irq_holder.hpp>

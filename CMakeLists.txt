@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(ram_irq)
 
-add_subdirectory(irq)
+add_subdirectory(examples)
 
 add_executable(${PROJECT_NAME} 
     main.cpp
@@ -10,7 +10,7 @@ add_executable(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} 
     PRIVATE
-        irq
+        examples
 )
 
 target_include_directories(${PROJECT_NAME}

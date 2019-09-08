@@ -1,7 +1,8 @@
 #pragma once
 
 #include <irq/irq.hpp>
-#include <irq/vectors.h>
+
+#include <examples/vectors/vectors.h>
 
 namespace examples {
 
