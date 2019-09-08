@@ -19,7 +19,7 @@ class IrqHolderFixedWithMultiIrq : IrqProvider::MultiIrqHandlerFixed<
       IrqProvider::Irq::ADC2>;
 
     //<! Needed because call_irq_handler is private
-    FRIEND_IRQ_HANDLER_FIXED;
+    friend class IrqProvider::PrivateAccessor;
 
  public:
     IrqHolderFixedWithMultiIrq() : MultiIrqHandler(this) {}

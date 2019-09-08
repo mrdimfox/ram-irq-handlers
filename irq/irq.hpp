@@ -66,10 +66,6 @@ struct IrqProvider
     IrqProvider(IrqProvider&&) = delete;
     IrqProvider& operator=(IrqProvider&&) = delete;
 
-    // static_assert(
-    //   std::is_same_v<std::underlying_type_t<VectorTableEnum>, std::uint8_t>,
-    //   "Underlying type of VectorTableEnum must be uint8_t");
-
     static constexpr const uint32_t VECTOR_TABLE_START_ADDR =
       VECTOR_TABLE_ADDRESS;
 
@@ -82,6 +78,30 @@ struct IrqProvider
 
         IsrHandlerSetter::set(vectors_table_start, func, uint8_t(irq));
     }
+
+    struct PrivateAccessor
+    {
+        template<
+          class IrqHandlerHolder,
+          Irq IRQ,
+          bool CALL_HANDLER_WITH_TEMPLATE_IRQ_TYPE>
+        static inline void __attribute__((always_inline))
+        call(IrqHandlerHolder* holder)
+        {
+            if constexpr (CALL_HANDLER_WITH_TEMPLATE_IRQ_TYPE) {
+                holder->template call_irq_handler<IRQ>();
+            }
+            else {
+                holder->call_irq_handler();
+            }
+        }
+
+        PrivateAccessor() = delete;
+        PrivateAccessor(const PrivateAccessor&) = delete;
+        PrivateAccessor& operator=(const PrivateAccessor&) = delete;
+        PrivateAccessor(PrivateAccessor&&) = delete;
+        PrivateAccessor& operator=(PrivateAccessor&&) = delete;
+    };
 
     /**
      * @brief Class for registering one IRQ handler
@@ -125,12 +145,8 @@ struct IrqProvider
      private:
         static void call_irq()
         {
-            if constexpr (IS_HANDLER_TEMPLATE) {
-                _holder->template call_irq_handler<IRQ>();
-            }
-            else {
-                _holder->call_irq_handler();
-            }
+            PrivateAccessor::template call<
+              IrqHandlerHolder, IRQ, IS_HANDLER_TEMPLATE>(_holder);
         }
 
         static IrqHandlerHolder* _holder;

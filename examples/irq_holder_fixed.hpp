@@ -11,13 +11,11 @@ namespace examples {
 class IrqHolderFixed
   : IrqProvider::IrqHandlerFixed<IrqHolderFixed, IrqProvider::Irq::USB>
 {
-    using IrqHandler =
-      IrqProvider::IrqHandlerFixed<IrqHolderFixed, IrqProvider::Irq::USB>;
-
-    friend IrqHandler;
+    //<! Needed because call_irq_handler is private
+    friend IrqProvider::PrivateAccessor;
 
  public:
-    IrqHolderFixed() : IrqHandler(this) {}
+    IrqHolderFixed() : IrqHandlerFixed(this) {}
 
  private:
     void call_irq_handler()
