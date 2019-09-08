@@ -3,25 +3,23 @@
 #include <cstdint>
 #include <iostream>
 
-#include <irq/irq.hpp>
-
 #include <examples/config.hpp>
+#include <examples/irq_provider.hpp>
 
 namespace examples {
 
-class IrqHolderFixedWithMultiIrq : irq::MultiIrqHandlerFixed<
+class IrqHolderFixedWithMultiIrq : IrqProvider::MultiIrqHandlerFixed<
                                      IrqHolderFixedWithMultiIrq,
-                                     irq::Irq::ADC1,
-                                     irq::Irq::ADC2>
+                                     IrqProvider::Irq::ADC1,
+                                     IrqProvider::Irq::ADC2>
 {
-    using MultiIrqHandler = irq::MultiIrqHandlerFixed<
+    using MultiIrqHandler = IrqProvider::MultiIrqHandlerFixed<
       IrqHolderFixedWithMultiIrq,
-      irq::Irq::ADC1,
-      irq::Irq::ADC2>;
+      IrqProvider::Irq::ADC1,
+      IrqProvider::Irq::ADC2>;
 
     //<! Needed because call_irq_handler is private
-    template<class, irq::Irq, bool>
-    friend class irq::IrqHandlerFixed;
+    FRIEND_IRQ_HANDLER_FIXED;
 
  public:
     IrqHolderFixedWithMultiIrq() : MultiIrqHandler(this) {}
@@ -35,7 +33,7 @@ class IrqHolderFixedWithMultiIrq : irq::MultiIrqHandlerFixed<
      *
      * @tparam irq::Irq is a param for specialization
      */
-    template<irq::Irq>
+    template<IrqProvider::Irq>
     void call_irq_handler();
 
     bool _is_adc1 = false;
@@ -46,7 +44,7 @@ class IrqHolderFixedWithMultiIrq : irq::MultiIrqHandlerFixed<
  * @brief ADC1 IRQ handler
  */
 template<>
-void IrqHolderFixedWithMultiIrq::call_irq_handler<irq::Irq::ADC1>()
+void IrqHolderFixedWithMultiIrq::call_irq_handler<IrqProvider::Irq::ADC1>()
 {
     if constexpr (config::examples::IS_PRINT_ENABLED) {
         std::cout << "ADC1 interrupt!"
@@ -60,7 +58,7 @@ void IrqHolderFixedWithMultiIrq::call_irq_handler<irq::Irq::ADC1>()
  * @brief ADC2 IRQ handler
  */
 template<>
-void IrqHolderFixedWithMultiIrq::call_irq_handler<irq::Irq::ADC2>()
+void IrqHolderFixedWithMultiIrq::call_irq_handler<IrqProvider::Irq::ADC2>()
 {
     if constexpr (config::examples::IS_PRINT_ENABLED) {
         std::cout << "ADC2 interrupt!"

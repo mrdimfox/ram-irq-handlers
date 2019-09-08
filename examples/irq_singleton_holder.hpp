@@ -3,10 +3,9 @@
 #include <cstdint>
 #include <iostream>
 
-#include <irq/irq.hpp>
-#include <singleton/singleton.hpp>
-
 #include <examples/config.hpp>
+#include <examples/irq_provider.hpp>
+#include <singleton/singleton.hpp>
 
 namespace examples {
 
@@ -17,8 +16,8 @@ class IrqHolderSingleton : public patterns::Singleton<IrqHolderSingleton>
  private:
     IrqHolderSingleton()
     {
-        irq::register_irq_handler(
-          irq::Irq::USART2, &IrqHolderSingleton::irq_uart2_handler);
+        IrqProvider::register_irq_handler(
+          IrqProvider::Irq::USART2, &IrqHolderSingleton::irq_uart2_handler);
     };
 
     static void irq_uart2_handler()

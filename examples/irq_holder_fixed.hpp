@@ -3,15 +3,17 @@
 #include <cstdint>
 #include <iostream>
 
-#include <irq/irq.hpp>
-
 #include <examples/config.hpp>
+#include <examples/irq_provider.hpp>
 
 namespace examples {
 
-class IrqHolderFixed : irq::IrqHandlerFixed<IrqHolderFixed, irq::Irq::USB>
+class IrqHolderFixed
+  : IrqProvider::IrqHandlerFixed<IrqHolderFixed, IrqProvider::Irq::USB>
 {
-    using IrqHandler = irq::IrqHandlerFixed<IrqHolderFixed, irq::Irq::USB>;
+    using IrqHandler =
+      IrqProvider::IrqHandlerFixed<IrqHolderFixed, IrqProvider::Irq::USB>;
+
     friend IrqHandler;
 
  public:

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 struct Vectors
 {
     void (*dma_irq)();
@@ -12,3 +14,15 @@ struct Vectors
 };
 
 extern struct Vectors global_irq_vectors;
+
+enum Irq
+{
+    DMA = (uint8_t)(0),
+    USART1,
+    USART2,
+    USB,
+    ADC1,
+    ADC2,
+    SPI1
+    // others
+};

@@ -3,17 +3,16 @@
 #include <cstdint>
 #include <iostream>
 
-#include <irq/irq.hpp>
-
 #include <examples/config.hpp>
+#include <examples/irq_provider.hpp>
 
 namespace examples {
 
-class IrqHolder : irq::IrqHandler<IrqHolder, irq::Irq::SPI1>
+class IrqHolder : IrqProvider::IrqHandler<IrqHolder, IrqProvider::Irq::SPI1>
 {
  public:
     IrqHolder() :
-      irq::IrqHandler<IrqHolder, irq::Irq::SPI1>(
+      IrqProvider::IrqHandler<IrqHolder, IrqProvider::Irq::SPI1>(
         this,
         &IrqHolder::_spi1_irq_handler)
     {
