@@ -23,9 +23,8 @@ struct DeafultRamIrqHandlerSetter
 /**
  * @brief Aggregator of all classes for a binding interrupts
  *
- * This class provide such info about a vector table to
- * inner classes like the vector table start address
- * and enum which describe a vector table structure.
+ * This class provide info like the vector table start address and enum which
+ * describes a vector table structure, to inner classes
  *
  * Example of usage:
  *
