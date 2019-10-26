@@ -4,23 +4,23 @@
 #include <iostream>
 
 #include "config.hpp"
-#include "irq_provider.hpp"
+#include "isr_provider.hpp"
 
 namespace examples {
 
 class IrqHolderFixedWithMultiIrq
-  : IrqProvider::MultiIrqHandlerFixed<
+  : IsrProvider::MultiIrqHandlerFixed<
       IrqHolderFixedWithMultiIrq,
-      IrqProvider::Irq::ADC1,
-      IrqProvider::Irq::ADC2>
+      IsrProvider::Irq::ADC1,
+      IsrProvider::Irq::ADC2>
 {
-    using MultiIrqHandler = IrqProvider::MultiIrqHandlerFixed<
+    using MultiIrqHandler = IsrProvider::MultiIrqHandlerFixed<
       IrqHolderFixedWithMultiIrq,
-      IrqProvider::Irq::ADC1,
-      IrqProvider::Irq::ADC2>;
+      IsrProvider::Irq::ADC1,
+      IsrProvider::Irq::ADC2>;
 
     //<! Needed because call_irq_handler is private
-    friend class IrqProvider::PrivateAccessor;
+    friend class IsrProvider::PrivateAccessor;
 
  public:
     IrqHolderFixedWithMultiIrq() : MultiIrqHandler(this) {}
@@ -34,7 +34,7 @@ class IrqHolderFixedWithMultiIrq
      *
      * @tparam irq::Irq is a param for specialization
      */
-    template<IrqProvider::Irq>
+    template<IsrProvider::Irq>
     void call_irq_handler();
 
     bool _is_adc1 = false;
@@ -45,7 +45,7 @@ class IrqHolderFixedWithMultiIrq
  * @brief ADC1 IRQ handler
  */
 template<>
-void IrqHolderFixedWithMultiIrq::call_irq_handler<IrqProvider::Irq::ADC1>()
+void IrqHolderFixedWithMultiIrq::call_irq_handler<IsrProvider::Irq::ADC1>()
 {
     if constexpr (config::examples::IS_PRINT_ENABLED) {
         std::cout << "ADC1 interrupt!"
@@ -59,7 +59,7 @@ void IrqHolderFixedWithMultiIrq::call_irq_handler<IrqProvider::Irq::ADC1>()
  * @brief ADC2 IRQ handler
  */
 template<>
-void IrqHolderFixedWithMultiIrq::call_irq_handler<IrqProvider::Irq::ADC2>()
+void IrqHolderFixedWithMultiIrq::call_irq_handler<IsrProvider::Irq::ADC2>()
 {
     if constexpr (config::examples::IS_PRINT_ENABLED) {
         std::cout << "ADC2 interrupt!"

@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "config.hpp"
-#include "irq_provider.hpp"
+#include "isr_provider.hpp"
 #include "singleton/singleton.hpp"
 
 namespace examples {
@@ -16,8 +16,8 @@ class IrqHolderSingleton : public patterns::Singleton<IrqHolderSingleton>
  private:
     IrqHolderSingleton()
     {
-        IrqProvider::register_irq_handler(
-          IrqProvider::Irq::USART2, &IrqHolderSingleton::irq_uart2_handler);
+        IsrProvider::register_irq_handler(
+          IsrProvider::Irq::USART2, &IrqHolderSingleton::irq_uart2_handler);
     };
 
     static void irq_uart2_handler()

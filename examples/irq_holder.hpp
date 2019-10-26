@@ -4,15 +4,15 @@
 #include <iostream>
 
 #include "config.hpp"
-#include "irq_provider.hpp"
+#include "isr_provider.hpp"
 
 namespace examples {
 
-class IrqHolder : IrqProvider::IrqHandler<IrqHolder, IrqProvider::Irq::SPI1>
+class IrqHolder : IsrProvider::IrqHandler<IrqHolder, IsrProvider::Irq::SPI1>
 {
  public:
     IrqHolder() :
-      IrqProvider::IrqHandler<IrqHolder, IrqProvider::Irq::SPI1>(
+      IsrProvider::IrqHandler<IrqHolder, IsrProvider::Irq::SPI1>(
         this,
         &IrqHolder::_spi1_irq_handler)
     {

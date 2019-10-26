@@ -4,22 +4,22 @@
 #include <iostream>
 
 #include "config.hpp"
-#include "irq_provider.hpp"
+#include "isr_provider.hpp"
 
 namespace examples {
 
 class MultiIrqHolder
-  : public IrqProvider::MultiIrqHandler<
+  : public IsrProvider::MultiIrqHandler<
       MultiIrqHolder,
-      IrqProvider::Irq::USART1,
-      IrqProvider::Irq::DMA>
+      IsrProvider::Irq::USART1,
+      IsrProvider::Irq::DMA>
 {
  public:
     MultiIrqHolder() :
       MultiIrqHandler<
         MultiIrqHolder,
-        IrqProvider::Irq::USART1,
-        IrqProvider::Irq::DMA>(
+        IsrProvider::Irq::USART1,
+        IsrProvider::Irq::DMA>(
         this,
         &MultiIrqHolder::_uart1_irq_handler,
         &MultiIrqHolder::_dma_irq_handler)
