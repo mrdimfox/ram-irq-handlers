@@ -1,4 +1,3 @@
-# RAM IRQ handlers
+# ramisr library
 
-Experimental classes for a registering own interrupt handlers
-using modern C++. Supposed that vectors table locates in RAM.
+Experimental classes for a registering own interrupt handlers using modern C++. Supposed that vectors table locates in RAM.
