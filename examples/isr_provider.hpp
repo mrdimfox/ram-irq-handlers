@@ -15,17 +15,15 @@ constexpr const uint32_t ISR_VECTOR_START = 0x0;
  * @brief Dummy irq handler setter
  *
  * Emulate setting interrupts handlers by
- * address provided by IrqProvider.
+ * address provided by ramisr::ServiceProvider.
  */
 struct IrqHandlerSetter
 {
-    static void set(
-      ramisr::VectorFreeFunc*,
-      ramisr::VectorFreeFunc func,
-      uint8_t func_shift)
+    static void
+    set(ramisr::FreeFunc*, ramisr::FreeFunc func, uint8_t func_shift)
     {
         auto* vector_emulation_start =
-          reinterpret_cast<ramisr::VectorFreeFunc*>(&global_irq_vectors);
+          reinterpret_cast<ramisr::FreeFunc*>(&global_irq_vectors);
 
         *(vector_emulation_start + func_shift) = func;
     }

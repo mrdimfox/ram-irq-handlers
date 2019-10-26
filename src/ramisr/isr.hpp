@@ -5,14 +5,13 @@
 
 namespace ramisr {
 
-using VectorFreeFunc = void (*)(void);
+using FreeFunc = void (*)(void);
 
 namespace detail {
 
 struct DeafultRamIrqHandlerSetter
 {
-    static void
-    set(VectorFreeFunc* vector_start, VectorFreeFunc func, uint8_t func_shift)
+    static void set(FreeFunc* vector_start, FreeFunc func, uint8_t func_shift)
     {
         *(vector_start + func_shift) = func;
     }
@@ -70,10 +69,10 @@ struct ServiceProvider
 
     using Irq = VectorTableEnum;
 
-    static inline void register_irq_handler(Irq irq, VectorFreeFunc func)
+    static inline void register_irq_handler(Irq irq, FreeFunc func)
     {
         auto vectors_table_start =
-          reinterpret_cast<VectorFreeFunc*>(VECTOR_TABLE_START_ADDR);
+          reinterpret_cast<FreeFunc*>(VECTOR_TABLE_START_ADDR);
 
         IrqHandlerSetter::set(vectors_table_start, func, uint8_t(irq));
     }
