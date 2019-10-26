@@ -4,15 +4,15 @@
 #include <iostream>
 
 #include "config.hpp"
-#include "irq_provider.hpp"
+#include "isr_provider.hpp"
 
 namespace examples {
 
 class IrqHolderFixed
-  : IrqProvider::IrqHandlerFixed<IrqHolderFixed, IrqProvider::Irq::USB>
+  : IsrProvider::IrqHandlerFixed<IrqHolderFixed, IsrProvider::Irq::USB>
 {
     //<! Needed because call_irq_handler is private
-    friend IrqProvider::PrivateAccessor;
+    friend IsrProvider::PrivateAccessor;
 
  public:
     IrqHolderFixed() : IrqHandlerFixed(this) {}

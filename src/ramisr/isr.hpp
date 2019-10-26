@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <type_traits>
 
-namespace isr {
+namespace ramisr {
 
 using VectorFreeFunc = void (*)(void);
 
@@ -36,34 +36,34 @@ struct DeafultRamIrqHandlerSetter
  * };
  *
  * constexpr const uint32_t VEC_TABLE_ADDR = 0x2001FC00;
- * using IrqProvider = irq::IrqProvider<VEC_TABLE_ADDR, Irq>;
+ * using ServiceProvider = irq::ServiceProvider<VEC_TABLE_ADDR, Irq>;
  *
  * // Now we can register an interrupt handler
  * // using `register_irq_handler` or any class below.
- * IrqProvider::register_irq_handler(Irq::SYS_TICK, my_handler);
+ * ServiceProvider::register_irq_handler(Irq::SYS_TICK, my_handler);
  *
  * @endcode
  *
- * Before using of IrqProvider subclasses you should call
+ * Before using of ServiceProvider subclasses you should call
  * `move_vector_table_to_ram` from one of the ports files
  * to move your vector table to RAM.
  *
  * @tparam VECTOR_TABLE_ADDRESS - start address of vector table in RAM
  * @tparam VectorTableEnum - enum describing a vector table structure
- * @tparam IsrHandlerSetter - special behaviour of setting Irq handler
- *         (by deafault it is just an assign, see DeafultRamIsrHandlerSetter)
+ * @tparam IrqHandlerSetter - special behaviour of setting Irq handler
+ *         (by default it is just an assign, see DeafultRamIrqHandlerSetter)
  */
 template<
   uint32_t VECTOR_TABLE_ADDRESS,
   typename VectorTableEnum,
-  class IsrHandlerSetter = detail::DeafultRamIrqHandlerSetter>
-struct IrqProvider
+  class IrqHandlerSetter = detail::DeafultRamIrqHandlerSetter>
+struct ServiceProvider
 {
-    IrqProvider() = delete;
-    IrqProvider(const IrqProvider&) = delete;
-    IrqProvider& operator=(const IrqProvider&) = delete;
-    IrqProvider(IrqProvider&&) = delete;
-    IrqProvider& operator=(IrqProvider&&) = delete;
+    ServiceProvider() = delete;
+    ServiceProvider(const ServiceProvider&) = delete;
+    ServiceProvider& operator=(const ServiceProvider&) = delete;
+    ServiceProvider(ServiceProvider&&) = delete;
+    ServiceProvider& operator=(ServiceProvider&&) = delete;
 
     static constexpr const uint32_t VECTOR_TABLE_START_ADDR =
       VECTOR_TABLE_ADDRESS;
@@ -75,7 +75,7 @@ struct IrqProvider
         auto vectors_table_start =
           reinterpret_cast<VectorFreeFunc*>(VECTOR_TABLE_START_ADDR);
 
-        IsrHandlerSetter::set(vectors_table_start, func, uint8_t(irq));
+        IrqHandlerSetter::set(vectors_table_start, func, uint8_t(irq));
     }
 
     struct PrivateAccessor
@@ -286,7 +286,7 @@ struct IrqProvider
 template<uint32_t VT, typename Enum, class S>
 template<class IrqHandlerHolder, Enum IRQ, bool TEMPLATE_IRQ_TYPE>
 IrqHandlerHolder* 
-IrqProvider<VT, Enum, S>::
+ServiceProvider<VT, Enum, S>::
   IrqHandlerFixed<IrqHandlerHolder, IRQ, TEMPLATE_IRQ_TYPE>::
     _holder = nullptr;
 
@@ -294,26 +294,26 @@ IrqProvider<VT, Enum, S>::
 template<uint32_t VT, typename Enum, class S>
 template<class IrqHandlerHolder, Enum IRQ>
 IrqHandlerHolder*
-IrqProvider<VT, Enum, S>::
+ServiceProvider<VT, Enum, S>::
   IrqHandler<IrqHandlerHolder, IRQ>::
     _holder = nullptr;
 
 /// Initialization of static variable _callable_handler of class IrqHandlerHolder
 template<uint32_t VT, typename Enum, class S>
 template<class IrqHandlerHolder, Enum IRQ>
-typename IrqProvider<VT, Enum, S>::template IrqHandler<IrqHandlerHolder, IRQ>::CallableHandler
-  IrqProvider<VT, Enum, S>::IrqHandler<IrqHandlerHolder, IRQ>::
+typename ServiceProvider<VT, Enum, S>::template IrqHandler<IrqHandlerHolder, IRQ>::CallableHandler
+  ServiceProvider<VT, Enum, S>::IrqHandler<IrqHandlerHolder, IRQ>::
     _callable_handler = nullptr;
 
 // clang-format on
 
-}  // namespace isr
+}  // namespace ramisr
 
 #define __COMMA__ ,
 
 #define __MAKE_FRIEND__(class_name, template_line)                             \
     template<uint32_t N_, class T_, class U_>                                  \
-    template_line friend class isr::IrqProvider<N_, T_, U_>::class_name
+    template_line friend class ramisr::ServiceProvider<N_, T_, U_>::class_name
 
 #define FRIEND_IRQ_HANDLER_FIXED                                               \
     __MAKE_FRIEND__(                                                           \

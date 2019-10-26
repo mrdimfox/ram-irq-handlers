@@ -19,19 +19,22 @@ constexpr const uint32_t ISR_VECTOR_START = 0x0;
  */
 struct IrqHandlerSetter
 {
-    static void
-    set(isr::VectorFreeFunc*, isr::VectorFreeFunc func, uint8_t func_shift)
+    static void set(
+      ramisr::VectorFreeFunc*,
+      ramisr::VectorFreeFunc func,
+      uint8_t func_shift)
     {
         auto* vector_emulation_start =
-          reinterpret_cast<isr::VectorFreeFunc*>(&global_irq_vectors);
+          reinterpret_cast<ramisr::VectorFreeFunc*>(&global_irq_vectors);
 
         *(vector_emulation_start + func_shift) = func;
     }
 };
 
 /**
- * @brief IrqProvider specialization for current addr and structure
+ * @brief ramisr::ServiceProvider specialization for current addr and structure
  */
-using IrqProvider = isr::IrqProvider<ISR_VECTOR_START, Irq, IrqHandlerSetter>;
+using IsrProvider =
+  ramisr::ServiceProvider<ISR_VECTOR_START, Irq, IrqHandlerSetter>;
 
 }  // namespace examples
