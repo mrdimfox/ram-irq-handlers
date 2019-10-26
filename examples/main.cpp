@@ -1,12 +1,12 @@
-#include <examples/vectors/vectors.h>
+#include "vectors/vectors.h"
 
-#include <examples/irq_holder.hpp>
-#include <examples/multi_irq_holder.hpp>
+#include "irq_holder.hpp"
+#include "multi_irq_holder.hpp"
 
-#include <examples/irq_holder_fixed.hpp>
-#include <examples/multi_irq_holder_fixed.hpp>
+#include "irq_holder_fixed.hpp"
+#include "multi_irq_holder_fixed.hpp"
 
-#include <examples/irq_singleton_holder.hpp>
+#include "irq_singleton_holder.hpp"
 
 int main()
 {

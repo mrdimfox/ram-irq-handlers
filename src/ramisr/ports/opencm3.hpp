@@ -2,6 +2,7 @@
 
 #include <algorithm>
 
+/// This headers should be provided by `libopencm3` library
 #include <libopencm3/cm3/nvic.h>
 #include <libopencm3/cm3/vector.h>
 #include <libopencmsis/core_cm3.h>
@@ -10,8 +11,9 @@ namespace irq {
 
 namespace port {
 
-inline static vector_table_t* move_vector_table_to_ram(uint32_t table_rom_addr,
-                                                       uint32_t table_ram_addr)
+inline static vector_table_t* move_vector_table_to_ram(
+  uint32_t table_rom_addr,
+  uint32_t table_ram_addr)
 {
     const uint32_t TABLE_ROM_ADDR = table_rom_addr;
     const uint32_t TABLE_RAM_ADDR = table_ram_addr;

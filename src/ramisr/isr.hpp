@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <type_traits>
 
-namespace irq {
+namespace isr {
 
 using VectorFreeFunc = void (*)(void);
 
@@ -307,13 +307,13 @@ typename IrqProvider<VT, Enum, S>::template IrqHandler<IrqHandlerHolder, IRQ>::C
 
 // clang-format on
 
-}  // namespace irq
+}  // namespace isr
 
 #define __COMMA__ ,
 
 #define __MAKE_FRIEND__(class_name, template_line)                             \
     template<uint32_t N_, class T_, class U_>                                  \
-    template_line friend class irq::IrqProvider<N_, T_, U_>::class_name
+    template_line friend class isr::IrqProvider<N_, T_, U_>::class_name
 
 #define FRIEND_IRQ_HANDLER_FIXED                                               \
     __MAKE_FRIEND__(                                                           \

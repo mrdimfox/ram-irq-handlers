@@ -1,3 +1,3 @@
-#include <examples/vectors/vectors.h>
+#include "vectors.h"
 
 struct Vectors global_irq_vectors;

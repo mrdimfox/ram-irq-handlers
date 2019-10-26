@@ -1,8 +1,8 @@
 #pragma once
 
-#include <irq/irq.hpp>
+#include <ramisr/isr.hpp>
 
-#include <examples/vectors/vectors.h>
+#include "vectors/vectors.h"
 
 namespace examples {
 
@@ -20,10 +20,10 @@ constexpr const uint32_t ISR_VECTOR_START = 0x0;
 struct IrqHandlerSetter
 {
     static void
-    set(irq::VectorFreeFunc*, irq::VectorFreeFunc func, uint8_t func_shift)
+    set(isr::VectorFreeFunc*, isr::VectorFreeFunc func, uint8_t func_shift)
     {
         auto* vector_emulation_start =
-          reinterpret_cast<irq::VectorFreeFunc*>(&global_irq_vectors);
+          reinterpret_cast<isr::VectorFreeFunc*>(&global_irq_vectors);
 
         *(vector_emulation_start + func_shift) = func;
     }
@@ -32,6 +32,6 @@ struct IrqHandlerSetter
 /**
  * @brief IrqProvider specialization for current addr and structure
  */
-using IrqProvider = irq::IrqProvider<ISR_VECTOR_START, Irq, IrqHandlerSetter>;
+using IrqProvider = isr::IrqProvider<ISR_VECTOR_START, Irq, IrqHandlerSetter>;
 
 }  // namespace examples

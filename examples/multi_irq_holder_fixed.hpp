@@ -3,15 +3,16 @@
 #include <cstdint>
 #include <iostream>
 
-#include <examples/config.hpp>
-#include <examples/irq_provider.hpp>
+#include "config.hpp"
+#include "irq_provider.hpp"
 
 namespace examples {
 
-class IrqHolderFixedWithMultiIrq : IrqProvider::MultiIrqHandlerFixed<
-                                     IrqHolderFixedWithMultiIrq,
-                                     IrqProvider::Irq::ADC1,
-                                     IrqProvider::Irq::ADC2>
+class IrqHolderFixedWithMultiIrq
+  : IrqProvider::MultiIrqHandlerFixed<
+      IrqHolderFixedWithMultiIrq,
+      IrqProvider::Irq::ADC1,
+      IrqProvider::Irq::ADC2>
 {
     using MultiIrqHandler = IrqProvider::MultiIrqHandlerFixed<
       IrqHolderFixedWithMultiIrq,

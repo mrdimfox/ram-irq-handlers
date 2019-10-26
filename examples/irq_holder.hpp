@@ -3,8 +3,8 @@
 #include <cstdint>
 #include <iostream>
 
-#include <examples/config.hpp>
-#include <examples/irq_provider.hpp>
+#include "config.hpp"
+#include "irq_provider.hpp"
 
 namespace examples {
 

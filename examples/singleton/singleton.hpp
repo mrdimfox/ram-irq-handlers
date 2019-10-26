@@ -2,8 +2,8 @@
 
 #include <type_traits>
 
-#include <singleton/non_copyable.hpp>
-#include <singleton/non_movable.hpp>
+#include "non_copyable.hpp"
+#include "non_movable.hpp"
 
 namespace patterns {
 
@@ -39,7 +39,9 @@ namespace patterns {
  *
  */
 template<typename T>
-struct Singleton : NonMovable<Singleton<T>>, NonCopyable<Singleton<T>>
+struct Singleton
+  : NonMovable<Singleton<T>>
+  , NonCopyable<Singleton<T>>
 {
 
     static T& instance()
